@@ -18,9 +18,9 @@ import java.util.Locale;
 import static java.lang.Thread.sleep;
 
 public class MainActivity3 extends AppCompatActivity {
-    private static final int REQUEST_CODE_SPEECH_INPUT = 1000 ;
+    private static final int REQUEST_CODE_SPEECH_INPUT = 1000;
     ImageButton mVoiceBtn;
-    TextView mTextTv,t1;
+    TextView mTextTv, t1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,6 @@ public class MainActivity3 extends AppCompatActivity {
         setContentView(R.layout.activity_main3);
         mTextTv = findViewById(R.id.textTv);
         t1 = findViewById(R.id.t1);
-
 
 
         mVoiceBtn = findViewById(R.id.voiceBtn);
@@ -43,6 +42,7 @@ public class MainActivity3 extends AppCompatActivity {
             }
         });
     }
+
     private void speak() {
         // intent to show speech to text dialog
 
@@ -50,7 +50,7 @@ public class MainActivity3 extends AppCompatActivity {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Hi speak something");
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hi speak something");
 
         //start intent
         try {
@@ -58,11 +58,10 @@ public class MainActivity3 extends AppCompatActivity {
             // show dialog
             startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT);
 
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             //if there was error
             //get message of error and show
-            Toast.makeText(this,""+e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
 
         }
@@ -75,98 +74,84 @@ public class MainActivity3 extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode)
-        {
+        switch (requestCode) {
             case REQUEST_CODE_SPEECH_INPUT: {
-                if (resultCode == RESULT_OK && null!=data) {
+                if (resultCode == RESULT_OK && null != data) {
                     //get text array from voice input
+                    String dd = "", yy = "", mm = "";
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     // set to text view
                     mTextTv.setText(result.get(0));
-
                     String listString = "";
 
-                    for (String s : result)
-                    {
+
+                    for (String s : result) {
                         listString += s.toLowerCase() + "\t";
                     }
-                   /*
-                        int dd,yy=0;
-                    String mm;
-                    if(listString.contains("january"))
-                    {
-                        mm="01";
-                    }
-                    else if(listString.contains("february"))
-                    {
-                        mm="02";
-                    }
-                    else if(listString.contains("march"))
-                    {
-                        mm="03";
-                    }
-                    else if(listString.contains("april"))
-                    {
-                        mm="04";
-                    }
-                    else if(listString.contains("may"))
-                    {
-                        mm="05";
-                    }
-                    else if(listString.contains("june"))
-                    {
-                        mm="06";
-                    }
-                    else if(listString.contains("july"))
-                    {
-                        mm="07";
-                    }
-                    else if(listString.contains("august"))
-                    {
-                        mm="08";
-                    }
-                    else if(listString.contains("september"))
-                    {
-                        mm="09";
-                    }
-                    else if(listString.contains("october"))
-                    {
-                        mm="10";
-                    }
-                    else if(listString.contains("november"))
-                    {
-                        mm="11";
-                    }
-                    else if(listString.contains("december"))
-                    {
-                        mm="12";
-                    }*/
 
-                    String number = listString.replaceAll("\\D+","");
-                    int i=Integer.parseInt(number);
+                    if (listString.contains("january")) {
+                        mm = "01";
+                    } else if (listString.contains("february")) {
+                        mm = "02";
+                    } else if (listString.contains("march")) {
+                        mm = "03";
+                    } else if (listString.contains("april")) {
+                        mm = "04";
+                    } else if (listString.contains("may")) {
+                        mm = "05";
+                    } else if (listString.contains("june")) {
+                        mm = "06";
+                    } else if (listString.contains("july")) {
+                        mm = "07";
+                    } else if (listString.contains("august")) {
+                        mm = "08";
+                    } else if (listString.contains("september")) {
+                        mm = "09";
+                    } else if (listString.contains("october")) {
+                        mm = "10";
+                    } else if (listString.contains("november")) {
+                        mm = "11";
+                    } else if (listString.contains("december")) {
+                        mm = "12";
+                    }
 
-                    if(i%500000<=200000) {
-                        if (i < 200000) {
-                            t1.setText("< 2 lakhs");
-                        } else if (i >= 200000 && i < 500000) {
-                            t1.setText("2 - 5 lakhs");
-                        } else if (i >= 500000 && i < 1000000) {
-                            t1.setText("5 - 10 lakhs");
-                        } else if (i >= 1000000) {
-                            t1.setText("10 lakhs >");
-                        }
+                    String number = listString.replaceAll("\\D+", " ");
+
+                    String arr1[] = number.split(" ", 2);
+                    String firstWord = arr1[0];
+                    String theRest = arr1[1];
+                    int i = Integer.parseInt(arr1[0]);
+
+
+                    if(i>1000)
+                    {
+                        yy=arr1[0];
+                        String arr2[] = theRest.split(" ", 2);
+                        mm=arr2[0];
+                        dd=arr2[1];
+                        t1.setText(dd + "/" + mm + "/" + yy);
                     }
-                    else
-                    {     if (i < 500000) {
-                        t1.setText("< 5 lakhs");
-                    } else if (i >= 500000 && i < 1500000) {
-                        t1.setText("5 - 15 lakhs");
-                    } else if (i >= 1500000 && i < 2000000) {
-                        t1.setText("15 - 20 lakhs");
-                    } else if (i >= 2000000) {
-                        t1.setText("20 lakhs >");
+
+
+
+
+                    if (i < 31 && mm != " ") {
+                        dd = arr1[0];
+                        yy = arr1[1];
+                        t1.setText(dd + "/" + mm + "/" + yy);
                     }
+
+
+                    if (i < 31 && mm == "") {
+                        dd = arr1[0];
+                        String arr2[] = theRest.split(" ", 2);
+                        //int i2 = Integer.parseInt(arr2[0]);
+                        mm = arr2[0];
+                        yy = arr2[1];
+                        t1.setText(dd+"/"+mm+"/"+yy);
                     }
+
+
                 }
                 break;
             }

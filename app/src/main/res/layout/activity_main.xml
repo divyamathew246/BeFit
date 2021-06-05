@@ -10,17 +10,17 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="418dp"
-        android:layout_height="327dp"
-        app:srcCompat="@drawable/bf"
+        android:layout_width="412dp"
+        android:layout_height="358dp"
         android:background="@android:color/background_light"
+        app:srcCompat="@drawable/bf"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="-4dp"
+        tools:layout_editor_absoluteX="3dp"
         tools:layout_editor_absoluteY="0dp" />
 
     <TextView
-        android:layout_width="403dp"
-        android:layout_height="403dp"
+        android:layout_width="401dp"
+        android:layout_height="384dp"
         android:background="#070707"
         android:gravity="center"
         android:text="BeFit"
@@ -32,6 +32,5 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.996" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

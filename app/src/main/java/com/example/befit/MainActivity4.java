@@ -1,4 +1,5 @@
 package com.example.befit;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,34 +11,27 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-public class MainActivity2 extends AppCompatActivity {
+import static java.lang.Thread.sleep;
 
+public class MainActivity4 extends AppCompatActivity {
     private static final int REQUEST_CODE_SPEECH_INPUT = 1000 ;
-    TextView mTextTv,t1,t2,t3,t4,t5;
     ImageButton mVoiceBtn;
-    Button b,next;
-
+    TextView mTextTv,t1;
+    Button next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
-
+        setContentView(R.layout.activity_main4);
         mTextTv = findViewById(R.id.textTv);
         t1 = findViewById(R.id.t1);
-        t2 = findViewById(R.id.t2);
-        t3= findViewById(R.id.t3);
-        t4 = findViewById(R.id.t4);
-        t5=findViewById(R.id.t5);
-        b= findViewById(R.id.button);
-        next =findViewById(R.id.button1);
+        next = findViewById(R.id.button2);
+
 
 
         mVoiceBtn = findViewById(R.id.voiceBtn);
@@ -92,67 +86,51 @@ public class MainActivity2 extends AppCompatActivity {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     // set to text view
                     mTextTv.setText(result.get(0));
+
                     String listString = "";
+
                     for (String s : result)
                     {
                         listString += s.toLowerCase() + "\t";
                     }
-                    String s1="diabetes";
-                    String s2="thyroid";
-                    String s3="cancer";
-                    String s4="no disease";
-                    String s5="no";
-                    String s6="none";
-                    String s7="high blood pressure";
-                    String s8="Others";
-                    int c=0;
-                    if (listString.contains(s1))
+
+                    String number = listString.replaceAll("\\D+","");
+                    int i=Integer.parseInt(number);
+                    if(i<100)
                     {
-                        t1.setText("Diabetes");
-                        c=1;
+                        i=i*100000;
                     }
-                    if (listString.contains(s2))
-                    {
-                        t2.setText("Thyroid");
-                        c=1;
-                    }
-                    if (listString.contains(s3))
-                    {
-                        t3.setText("Cancer");
-                        c=1;
-                    }
-                    if (listString.contains(s4)||listString.contains(s5)||listString.contains(s6))
-                    {
-                        t4.setText("None");
-                    }
-                    if(listString.contains(s7))
-                    {
-                        if(c==1)
-                        {
-                            t5.setText("Others");
+
+                    if(i%500000<=200000) {
+                        if (i < 200000) {
+                            t1.setText("income < 2 lakhs");
+                        } else if (i >= 200000 && i  < 500000) {
+                            t1.setText("2 - 5 lakhs");
+                        } else if (i >= 500000 && i < 1000000) {
+                            t1.setText("5 - 10 lakhs");
+                        } else if (i >= 1000000) {
+                            t1.setText("10 lakhs <= income");
                         }
+                    }
+                    else
+                    {     if (i < 500000) {
+                        t1.setText("income < 5 lakhs");
+                    } else if (i >= 500000 && i < 1500000) {
+                        t1.setText("5 - 15 lakhs");
+                    } else if (i >= 1500000 && i < 2000000) {
+                        t1.setText("15 - 20 lakhs");
+                    } else if (i >= 2000000) {
+                        t1.setText("20 lakhs <= income");
+                    }
                     }
                 }
                 break;
             }
         }
-
-
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                t1.setText(" ");
-                t2.setText(" ");
-                t3.setText(" ");
-                t4.setText(" ");
-                t5.setText(" ");
-            }
-        });
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity2.this,MainActivity4.class);
+                Intent intent=new Intent(MainActivity4.this,MainActivity3.class);
                 startActivity(intent);
             }
         });
