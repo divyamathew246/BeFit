@@ -10,31 +10,25 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-public class MainActivity2 extends AppCompatActivity {
+import static java.lang.Thread.sleep;
 
+public class MainActivity3 extends AppCompatActivity {
     private static final int REQUEST_CODE_SPEECH_INPUT = 1000 ;
-    TextView mTextTv,t1,t2,t3,t4,t5;
     ImageButton mVoiceBtn;
-
+    TextView mTextTv,t1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
-
+        setContentView(R.layout.activity_main3);
         mTextTv = findViewById(R.id.textTv);
         t1 = findViewById(R.id.t1);
-        t2 = findViewById(R.id.t2);
-        t3= findViewById(R.id.t3);
-        t4 = findViewById(R.id.t4);
-        t5=findViewById(R.id.t5);
+
 
 
         mVoiceBtn = findViewById(R.id.voiceBtn);
@@ -89,51 +83,93 @@ public class MainActivity2 extends AppCompatActivity {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     // set to text view
                     mTextTv.setText(result.get(0));
+
                     String listString = "";
+
                     for (String s : result)
                     {
                         listString += s.toLowerCase() + "\t";
                     }
-                    String s1="diabetes";
-                    String s2="thyroid";
-                    String s3="cancer";
-                    String s4="no disease";
-                    String s5="no";
-                    String s6="none";
-                    String s7="high blood pressure";
-                    String s8="Others";
-                    int c=0;
-                    if (listString.contains(s1))
+                   /*
+                        int dd,yy=0;
+                    String mm;
+                    if(listString.contains("january"))
                     {
-                        t1.setText("Diabetes");
-                        c=1;
+                        mm="01";
                     }
-                    if (listString.contains(s2))
+                    else if(listString.contains("february"))
                     {
-                        t2.setText("Thyroid");
-                        c=1;
+                        mm="02";
                     }
-                    if (listString.contains(s3))
+                    else if(listString.contains("march"))
                     {
-                        t3.setText("Cancer");
-                        c=1;
+                        mm="03";
                     }
-                    if (listString.contains(s4)||listString.contains(s5)||listString.contains(s6))
+                    else if(listString.contains("april"))
                     {
-                        t4.setText("None");
+                        mm="04";
                     }
-                    if(listString.contains(s7))
+                    else if(listString.contains("may"))
                     {
-                        if(c==1)
-                        {
-                            t5.setText("Others");
+                        mm="05";
+                    }
+                    else if(listString.contains("june"))
+                    {
+                        mm="06";
+                    }
+                    else if(listString.contains("july"))
+                    {
+                        mm="07";
+                    }
+                    else if(listString.contains("august"))
+                    {
+                        mm="08";
+                    }
+                    else if(listString.contains("september"))
+                    {
+                        mm="09";
+                    }
+                    else if(listString.contains("october"))
+                    {
+                        mm="10";
+                    }
+                    else if(listString.contains("november"))
+                    {
+                        mm="11";
+                    }
+                    else if(listString.contains("december"))
+                    {
+                        mm="12";
+                    }*/
+
+                    String number = listString.replaceAll("\\D+","");
+                    int i=Integer.parseInt(number);
+
+                    if(i%500000<=200000) {
+                        if (i < 200000) {
+                            t1.setText("< 2 lakhs");
+                        } else if (i >= 200000 && i < 500000) {
+                            t1.setText("2 - 5 lakhs");
+                        } else if (i >= 500000 && i < 1000000) {
+                            t1.setText("5 - 10 lakhs");
+                        } else if (i >= 1000000) {
+                            t1.setText("10 lakhs >");
                         }
                     }
-        }
+                    else
+                    {     if (i < 500000) {
+                        t1.setText("< 5 lakhs");
+                    } else if (i >= 500000 && i < 1500000) {
+                        t1.setText("5 - 15 lakhs");
+                    } else if (i >= 1500000 && i < 2000000) {
+                        t1.setText("15 - 20 lakhs");
+                    } else if (i >= 2000000) {
+                        t1.setText("20 lakhs >");
+                    }
+                    }
+                }
                 break;
             }
         }
-
-
     }
 }
